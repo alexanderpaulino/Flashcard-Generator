@@ -75,7 +75,8 @@ function incorrectAnswerCloze(){
 
 //This inquirer function handles the basic flashcard questions. Correct and incorrect answers are tallied up for 
 //the result screen at the end. Additionally, I made use of a recursive function to limit the code required for this. 
-//The game will continue until the user has reached the last object or question in the basic.json file. 
+//The game will continue until the user has reached the last object or question in the basic.json file. I've also 
+//included a command to end the flashcard system and return the user to the terminal/GitBash.
 
 function basicFlash(){
 
@@ -94,8 +95,11 @@ if (question <= basicData.length) {
 
 	  if (user.answer === cardArray[question-1].back) {
 	 	correctAnswer(); 	
+	  } else if (user.answer === "^X"){
+	  	end();
+	  	process.exit();
 	  } else {
-	  incorrectAnswerBasic();
+	  	incorrectAnswerBasic();
 		}
 		question++;
 		basicFlash();
@@ -109,7 +113,8 @@ if (question <= basicData.length) {
 // the partial property of the cloze flashcard objects. In ClozeCard.js, we see that the partial property takes the
 // full text and replaces the matching string of the answer with a set of ellipses. In the event that the user adds
 // a question and answer to the cloze.json file where there is no match between the cloze and full text, an error message
-// will be returned detailing that issue.
+// will be returned detailing that issue. I've also included a command to end the flashcard system and return the user
+// to the terminal/GitBash.
 
 function clozeFlash(){
 
@@ -128,6 +133,9 @@ if (question <= clozeData.length) {
 
 	  if (user.answer === cardArray[question-1].cloze) {
 	  	correctAnswer();
+	  } else if (user.answer === "^X"){
+	  	end();
+	  	process.exit();
 	  } else {
 	  	incorrectAnswerCloze();
 		}
@@ -183,14 +191,22 @@ inquirer.prompt([
 	]).then(function(user) {
 	  user.cardType = user.cardType.toLowerCase(); 
 	  if (user.cardType === "basic") {
-	  	console.log("=============================================================================");
-	    console.log("Starting basic US Politics Trivia flashcards! Answers are case-sensitive!");
-	    console.log("=============================================================================");
+	  	console.log("================================================================================");
+	    console.log("Starting basic US Politics Trivia flashcards! Answers are case-sensitive!"+
+	    			"\r\n\r\nNote: Full names and correct spelling are required. If the person is referenced"+
+	    			"\r\nwith their middle initial, the first letter followed by a period will suffice."+
+	    			"\r\nExample: 'Franklin D. Roosevelt' would be a correct answer."+
+	    			"\r\n\r\nEnter '^X' at any time to end the game and receive your results up to that point.");
+	    console.log("================================================================================");
 	    initBasic();
 	  	} else {
-	    console.log("=============================================================================");
-	    console.log("Starting cloze US Politics Trivia flashcards! Answers are case-sensitive!");
-	    console.log("=============================================================================");
+	    console.log("================================================================================");
+	    console.log("Starting cloze US Politics Trivia flashcards! Answers are case-sensitive!"+
+	    			"\r\n\r\nNote: Full names and correct spelling are required. If the person is refrenced"+
+	    			"\r\nwith their middle initial, the first letter followed by a period will suffice."+
+	    			"\r\nExample: 'Franklin D. Roosevelt' would be a correct answer."+
+	    			"\r\n\r\nEnter '^X' at any time to end the game and receive your results up to that point.")
+	    console.log("================================================================================");
 	    initCloze();
 	  	}
 	 });
