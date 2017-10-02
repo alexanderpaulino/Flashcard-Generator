@@ -1,4 +1,7 @@
 ClozeCard = function(text, cloze) {
+  if (!(this instanceof ClozeCard)){
+		return new ClozeCard(text, cloze);
+	}
   this.cloze = cloze;
   this.text = text;
   this.partial = text.replace(cloze, "...")
