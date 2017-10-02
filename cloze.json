@@ -1,0 +1,42 @@
+[
+	{
+		"text": "The first President of the United States was George Washington.",
+		"cloze": "George Washington"
+	},
+	{
+		"text": "Abraham Lincoln was the sixteenth President of the United States.",
+		"cloze": "Abraham Lincoln"
+	},
+	{
+		"text": "Alexander Hamilton was a founding father who currently has a celebrated musical detailing his life and works on Broadway.",
+		"cloze": "Alexander Hamilton"
+	},
+	{
+		"text": "The only President to serve more than two terms was Franklin D. Roosevelt.",
+		"cloze": "Franklin D. Roosevelt"
+	},
+	{
+		"text": "A rarity, Grover Cleveland was the only President to serve two non-consecutive terms.",
+		"cloze": "Grover Cleveland"
+	},
+	{
+		"text": "At age 70, Donald Trump was the oldest person to be elected President.",
+		"cloze": "Donald Trump"
+	},
+	{
+		"text": "The first President to live in the White House was John Adams, surprisingly enough.",
+		"cloze": "John Adams"
+	},
+	{
+		"text": "Barack Obama was the first President born outside the contiguous United States. He was born in Hawaii.",
+		"cloze": "Barack Obama"
+	},
+	{
+		"text": "On March 30, 1867, Andrew Johnson signed the treaty to purchase Alaska from Russia.",
+		"cloze": "Andrew Johnson"
+	},
+	{
+		"text": "The first President to appear on television was Franklin D. Roosevelt, at the 1939 World's Fair.",
+		"cloze": "Franklin D. Roosevelt"
+	}
+]

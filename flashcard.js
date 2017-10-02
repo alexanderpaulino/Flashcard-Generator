@@ -1,70 +1,42 @@
-var basic = require("./BasicCard.js");
-var cloze = require("./ClozeCard.js");
+var BasicCard = require("./BasicCard.js");
+var basicData = require("./basic.json");
+var ClozeCard = require("./ClozeCard.js");
+var clozeData = require("./cloze.json");
 var inquirer = require("inquirer");
 var question = 1;
 var correct = 0;
 var incorrect = 0;
+var currentCard;
+var cardArray = [];
 
-//This function will be referenced once the basic flashcards have been selected and will be called after each
-//question has been answered, correctly or incorrectly. 
+//This function will be run once and will fill the cardArray with objects we have stored in the basic.json file.
+//A user can add as many additional objects as they like to the basic.json file and the game will operate normally.
 
-function basicCards(){
-if (question == 1) {
-	flashcardquestion = new BasicCard("Who was the first President of the United States?", "George Washington")
-	} else if (question == 2) {
-	flashcardquestion = new BasicCard("Who was the sixteenth President of the United States?", "Abraham Lincoln")
-	} else if (question == 3) {
-	flashcardquestion = new BasicCard("Who was a founding father who currently has a celebrated Broadway musical covering his life and works?", "Alexander Hamilton")
-	} else if (question == 4) {
-	flashcardquestion = new BasicCard("Who was the only President to serve more than two terms?", "Franklin D. Roosevelt")
-	} else if (question == 5) {
-	flashcardquestion = new BasicCard("Who was the only President to serve two non-consecutive terms?", "Grover Cleveland")
-	} else if (question == 6) {
-	flashcardquestion = new BasicCard("Who was the oldest person elected President?", "Donald Trump")
-	} else if (question == 7) {
-	flashcardquestion = new BasicCard("Who was the first President to live in the White House?", "John Adams")
-	} else if (question == 8) {
-	flashcardquestion = new BasicCard("Who was the first President born outside the contiguous United States?", "Barack Obama")
-	} else if (question == 9) {
-	flashcardquestion = new BasicCard("Which U.S. President signed the treaty to purchase Alaska from Russia?", "Andrew Johnson")
-	} else if (question == 10) {
-	flashcardquestion = new BasicCard("Who was the first President to appear on television?", "Franklin D. Roosevelt")
-	} 
+function initBasic(){
+	for (var i =0; i < basicData.length; i++){
+		currentCard = new BasicCard(basicData[i].front, basicData[i].back);
+		cardArray.push(currentCard);
+	}
+basicFlash();
 }
 
-//This function will be referenced once cloze flashcards have been selected and will be called after each
-//question has been answered, correctly or incorrectly.
+//This function will be run once and will fill the cardArray with objects we have stored in the cloze.json file.
+//A user can add as many additional objects as they like to the cloze.json file and the game will operate normally.
 
-function clozeCards(){
-	if (question == 1) {
-	flashcardquestion = new ClozeCard("George Washington was the first President of the United States.", "George Washington")
-	} else if (question == 2) {
-	flashcardquestion = new ClozeCard("Abraham Lincoln was the sixteenth President of the United States.", "Abraham Lincoln")
-	} else if (question == 3) {
-	flashcardquestion = new ClozeCard("Alexander Hamilton was a founding father who currently has a celebrated Broadway musical covering his life and works.", "Alexander Hamilton")
-	} else if (question == 4) {
-	flashcardquestion = new ClozeCard("Franklin D. Roosevelt was the only President to serve more than two terms.", "Franklin D. Roosevelt")
-	} else if (question == 5) {
-	flashcardquestion = new ClozeCard("Grover Cleveland was the only President to serve two non-consecutive terms.", "Grover Cleveland")
-	} else if (question == 6) {
-	flashcardquestion = new ClozeCard("The oldest person elected President was Donald Trump at 70 years old.", "Donald Trump")
-	} else if (question == 7) {
-	flashcardquestion = new ClozeCard("John Adams was the first President to live in the White House.", "John Adams")
-	} else if (question == 8) {
-	flashcardquestion = new ClozeCard("Barack Obama was the first President born outside the contiguous United States.", "Barack Obama")
-	} else if (question == 9) {
-	flashcardquestion = new ClozeCard("On March 30, 1867, Andrew Johnson signed the treaty to purchase Alaska from Russia.", "Andrew Johnson")
-	} else if (question == 10) {
-	flashcardquestion = new ClozeCard("Franklin D. Roosevelt was the first President to appear on television.", "Franklin D. Roosevelt")
-	}	
+function initCloze(){
+		for (var i =0; i < clozeData.length; i++){
+		currentCard = new ClozeCard(clozeData[i].text, clozeData[i].cloze);
+		cardArray.push(currentCard);
+	}
+clozeFlash();
 }
 
 //The following three functions will reveal the results of an answer. I could have left this at two functions, but 
-//I wanted the correct answer to be revealed for both basic and cloze flashcards.
+//I wanted the correct answer to be revealed for both basic and cloze flashcards systems.
 
 function correctAnswer(){
 	correct++;
-	if (question == 10) {
+	if (question >= basicData.length) {
 	console.log("==============================================");
   console.log("Correct! That was the last question!");
   console.log("==============================================");	
@@ -77,90 +49,90 @@ function correctAnswer(){
 
 function incorrectAnswerBasic(){
 	incorrect++;
-	if (question == 10) {
+	if (question >= basicData.length) {
 	console.log("==============================================");
-  console.log("Incorrect! The correct answer was "+flashcardquestion.back+". Unfortunately, that was the last question...");
+  console.log("Incorrect! The correct answer was "+cardArray[question-1].back+". Unfortunately, that was the last question...");
   console.log("==============================================");	
 	} else {
   console.log("==============================================");
-  console.log("Incorrect! The correct answer was "+flashcardquestion.back+". Let's move on.");
+  console.log("Incorrect! The correct answer was "+cardArray[question-1].back+". Let's move on.");
   console.log("==============================================");
   };
 }
 
 function incorrectAnswerCloze(){
 	incorrect++;
-	if (question == 10) {
+	if (question >= clozeData.length) {
 	console.log("==============================================");
-  console.log("Incorrect! The correct answer was "+flashcardquestion.cloze+". Unfortunately, that was the last question...");
+  console.log("Incorrect! The correct answer was "+cardArray[question-1].cloze+". Unfortunately, that was the last question...");
   console.log("==============================================");	
 	} else {
   console.log("==============================================");
-  console.log("Incorrect! The correct answer was "+flashcardquestion.cloze+". Let's move on.");
+  console.log("Incorrect! The correct answer was "+cardArray[question-1].cloze+". Let's move on.");
   console.log("==============================================");
   };
 }
 
-//This inquirer function handles the basic flashcard questions. The user will be presented by a question that they
-//will answer. Correct and incorrect answers tally up for the result screen at the end.
+//This inquirer function handles the basic flashcard questions. Correct and incorrect answers are tallied up for 
+//the result screen at the end. Additionally, I made use of a recursive function to limit the code required for this. 
+//The game will continue until the user has reached the last object or question in the basic.json file. 
 
-function startBasic(){
+function basicFlash(){
 
-basicCards();
-
-if (question <= 10) {
+if (question <= basicData.length) {
 
 	inquirer.prompt([
 	  
 	  {
 	    type: "input",
 	    name: "answer",
-	    message: question+". "+flashcardquestion.front,
+	    message: question+". "+cardArray[question-1].front,
 	    suffix: "\nAnswer:"
 	  },
 
 	]).then(function(user) {
 
-	  if (user.answer === flashcardquestion.back) {
+	  if (user.answer === cardArray[question-1].back) {
 	 	correctAnswer(); 	
 	  } else {
 	  incorrectAnswerBasic();
 		}
 		question++;
-		startBasic(); 
+		basicFlash();
 		}) 
 	} else {
 		end();
 	}
 };
 
-// This inquirer function provides the user with a series of questions where the answer is blocked out.
-// It otherwise functions identically to the basic flashcard function.
+// Identical to the function above, except this is for the cloze flashcard system. As such, the question references
+// the partial property of the cloze flashcard objects. In ClozeCard.js, we see that the partial property takes the
+// full text and replaces the matching string of the answer with a set of ellipses. In the event that the user adds
+// a question and answer to the cloze.json file where there is no match between the cloze and full text, an error message
+// will be returned detailing that issue.
 
-function startCloze(){
+function clozeFlash(){
 
-clozeCards();
-
-if (question <= 10) {
+if (question <= clozeData.length) {
 
 	inquirer.prompt([
 	  
 	  {
 	    type: "input",
 	    name: "answer",
-	    message: question+". "+flashcardquestion.partial,
+	    message: question+". "+cardArray[question-1].partial,
 	    suffix: "\nAnswer:"
 	  },
 
 	]).then(function(user) {
 
-	  if (user.answer === flashcardquestion.cloze) {
+	  if (user.answer === cardArray[question-1].cloze) {
 	  	correctAnswer();
 	  } else {
 	  	incorrectAnswerCloze();
 		}
 		question++;
-		startCloze(); 
+		clozeFlash(); 
 		}) 
 	} else {
 		end();
@@ -189,7 +161,7 @@ function end() {
 
 // This inquirer prompt initiates the flashcard system. The user will be prompted with deciding whether
 // they want to use basic flashcards or cloze fashcards for their session. Any answer aside from
-// basic or cloze will repeat the question.
+// basic or cloze will repeat the question. I also ensured that their answer here would not be case-sensitive.
 
 inquirer.prompt([
 	  
@@ -211,14 +183,14 @@ inquirer.prompt([
 	]).then(function(user) {
 	  user.cardType = user.cardType.toLowerCase(); 
 	  if (user.cardType === "basic") {
-	  	console.log("==============================================");
-	    console.log("Starting basic US Politics Trivia flashcards!");
-	    console.log("==============================================");
-	    startBasic();
+	  	console.log("=============================================================================");
+	    console.log("Starting basic US Politics Trivia flashcards! Answers are case-sensitive!");
+	    console.log("=============================================================================");
+	    initBasic();
 	  	} else {
-	    console.log("==============================================");
-	    console.log("Starting cloze US Politics Trivia flashcards!");
-	    console.log("==============================================");
-	    startCloze();
+	    console.log("=============================================================================");
+	    console.log("Starting cloze US Politics Trivia flashcards! Answers are case-sensitive!");
+	    console.log("=============================================================================");
+	    initCloze();
 	  	}
 	 });
