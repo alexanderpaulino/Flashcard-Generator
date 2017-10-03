@@ -14,7 +14,7 @@ var cardArray = [];
 
 function initBasic(){
 	for (var i =0; i < basicData.length; i++){
-		currentCard = new BasicCard(basicData[i].front, basicData[i].back);
+		currentCard = BasicCard(basicData[i].front, basicData[i].back);
 		cardArray.push(currentCard);
 	}
 basicFlash();
@@ -25,7 +25,7 @@ basicFlash();
 
 function initCloze(){
 		for (var i =0; i < clozeData.length; i++){
-		currentCard = new ClozeCard(clozeData[i].text, clozeData[i].cloze);
+		currentCard = ClozeCard(clozeData[i].text, clozeData[i].cloze);
 		cardArray.push(currentCard);
 	}
 clozeFlash();
@@ -202,7 +202,7 @@ inquirer.prompt([
 	  	} else {
 	    console.log("================================================================================");
 	    console.log("Starting cloze US Politics Trivia flashcards! Answers are case-sensitive!"+
-	    			"\r\n\r\nNote: Full names and correct spelling are required. If the person is refrenced"+
+	    			"\r\n\r\nNote: Full names and correct spelling are required. If the person is referenced"+
 	    			"\r\nwith their middle initial, the first letter followed by a period will suffice."+
 	    			"\r\nExample: 'Franklin D. Roosevelt' would be a correct answer."+
 	    			"\r\n\r\nEnter '^X' at any time to end the game and receive your results up to that point.")
